@@ -27,14 +27,13 @@ echo "Compare the executable sizes:"
 set -x
 du -ba --apparent-size *.exe
 objdump -D main_static.exe > main_static.asm
+set +x
 
 if grep -q "dummy_function_unused" main_static.asm; then
-    set +x
     printf "$RED"
     echo "Unused function is in final binary. Static linking is bad!"
     printf "$RESET"
 else
-    set +x
     printf "$RED"
     echo "Unused function is gone. Static linking rocks!"
     printf "$RESET"
