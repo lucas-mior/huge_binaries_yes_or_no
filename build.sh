@@ -4,7 +4,8 @@ echo "Does your compiler produce huge binaries with static linking?"
 
 CFLAGS="$CFLAGS -flto -O2 -Wall -Wextra"
 CC=clang
-if [ $CC = "clang" ]; then
+compiler="$(readlink -f "$CC")"
+if [ "$(basename "$compiler")" = "clang" ]; then
     CFLAGS="$CFLAGS -Weverything -Wno-unsafe-buffer-usage"
 fi
 set -x
