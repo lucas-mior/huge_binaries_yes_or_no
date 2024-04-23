@@ -1,2 +1,2 @@
-int __attribute__ ((noinline)) dummy_function1(int *buffer, int size);
-unsigned int __attribute__ ((noinline)) dummy_function2(int *buffer, int size);
+int __attribute__ ((noinline)) dummy_function_used(int *buffer, int size);
+unsigned int __attribute__ ((noinline)) dummy_function_unused(int *buffer, int size);

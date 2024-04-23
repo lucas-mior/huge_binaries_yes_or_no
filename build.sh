@@ -3,7 +3,7 @@
 echo "Does your compiler produce huge binaries with static linking?"
 
 CFLAGS=" -flto -O2 "
-CC=clang
+CC=gcc
 set -x
 
 $CC library.c -shared -fPIC $CFLAGS -o libdynamic.so
@@ -22,7 +22,11 @@ set +x
 
 objdump -D main_static.exe > main_static.asm
 if grep -q "dummy_function_unused" main_static.asm; then
+    printf "$RED"
     echo "Unused function is in final binary. Static linking is bad!"
+    printf "$RESET"
 else
+    printf "$RED"
     echo "Unused function is gone. Static linking rocks!"
+    printf "$RESET"
 fi

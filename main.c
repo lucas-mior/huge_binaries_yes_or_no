@@ -15,7 +15,7 @@ int main(int argc, char **argv) {
         buffer[i] = i;
     }
 
-    x = dummy_function1(buffer, LENGTH(buffer));
+    x = dummy_function_used(buffer, LENGTH(buffer));
     printf("Result(%s) = %d\n", argv[0], x);
 
     exit(0);
