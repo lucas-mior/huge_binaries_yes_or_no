@@ -13,19 +13,21 @@ $CC library.c -shared -fPIC $CFLAGS -o libdynamic.so
 $CC library.c -c            $CFLAGS -o object.o
 ar rcs libstatic.a object.o
 
-$CC main.c -o main_dynamic.exe $CFLAGS -L. -ldynamic
-$CC main.c -o main_static.exe  $CFLAGS -L. -lstatic
-$CC main.c -o main_object.exe  $CFLAGS      object.o
+$CC main.c -o main_dynamic.exe      $CFLAGS -L. -ldynamic
+$CC main.c -o main_static.exe       $CFLAGS -L. -lstatic
+$CC main.c -o main_static_libc.exe  $CFLAGS -L. -lstatic -static
+$CC main.c -o main_object.exe       $CFLAGS      object.o
 
 export LD_LIBRARY_PATH=.
 set +x
 ./main_dynamic.exe
 ./main_object.exe
 ./main_static.exe
+./main_static_libc.exe
 
-echo "Compare the executable sizes:"
+echo "Compare the sizes:"
 set -x
-du -ba --apparent-size *.exe
+du -ba --apparent-size *.exe /usr/lib/libc.a
 objdump -D main_static.exe > main_static.asm
 set +x
 
