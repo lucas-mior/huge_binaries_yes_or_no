@@ -1,8 +1,8 @@
 #!/bin/sh
 
-echo "Does gcc produce huge binaries with static linking?"
+echo "Does your compiler produce huge binaries with static linking?"
 
-CFLAGS="-flto -O2 "
+CFLAGS=" -flto -O2 "
 CC=clang
 set -x
 
@@ -19,3 +19,10 @@ set +x
 ./main_dynamic.exe
 ./main_object.exe
 ./main_static.exe
+
+objdump -D main_static.exe > main_static.asm
+if grep -q "dummy_function_unused" main_static.asm; then
+    echo "Unused function is in final binary. Static linking is bad!"
+else
+    echo "Unused function is gone. Static linking rocks!"
+fi
